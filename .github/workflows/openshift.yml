@@ -3,9 +3,9 @@ name: OpenShift
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
-  OPENSHIFT_NAMESPACE: "mahedi017-dev"
+  OPENSHIFT_NAMESPACE: "kilo-dev"
   APP_NAME: "my-go-app"
-  APP_PORT: "8080"
+  APP_PORT: "8082"
   IMAGE_REGISTRY: docker.io/mridul017
   IMAGE_REGISTRY_USER: mridul017
   IMAGE_REGISTRY_PASSWORD: ${{ secrets.IMAGE_REGISTRY_PASSWORD }}
