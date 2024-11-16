@@ -10,5 +10,5 @@ func main() {
     r := mux.NewRouter()
     routes.RegisterItemRoutes(r)
     http.Handle("/", r)
-    http.ListenAndServe(":8080", nil)
+    http.ListenAndServe(":8084", nil)
 }
