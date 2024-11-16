@@ -1,4 +1,4 @@
-name: OpenShift
+name: Build and deploy to OpenShift
 
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
@@ -59,7 +59,6 @@ jobs:
           }
           else {
             core.info(`✅ All the required secrets are set`);
-          }
 
     - name: Check out repository
       uses: actions/checkout@v4
@@ -118,6 +117,14 @@ jobs:
         image: ${{ steps.push-image.outputs.registry-path }}
         namespace: ${{ env.OPENSHIFT_NAMESPACE }}
         port: ${{ env.APP_PORT }}
+
+    - name: Create service for the app
+      run: |
+        oc expose deployment/${{ env.APP_NAME }} --port=${{ env.APP_PORT }} --target-port=${{ env.APP_PORT }} --name=${{ env.APP_NAME }} --namespace=${{ env.OPENSHIFT_NAMESPACE }}
+
+    - name: Patch service with the port "8084"
+      run: |
+        oc patch service/${{ env.APP_NAME }} --patch='{"spec":{"ports":[{"name":"8084-tcp","port":8084}]}}' --namespace=${{ env.OPENSHIFT_NAMESPACE }}
 
     - name: Print application URL
       env:
